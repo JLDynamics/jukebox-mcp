@@ -1,6 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 
 from playlist_library import (
+    delete_song,
     get_player_status,
     import_song_from_inbox,
     list_inbox_mp3_files,
@@ -25,6 +26,11 @@ def list_inbox_songs():
 @mcp.tool()
 def import_inbox_song(file_name: str, mood: str):
     return import_song_from_inbox(file_name, mood)
+
+
+@mcp.tool()
+def delete_song_by_title(mood: str, title: str):
+    return delete_song(mood, title)
 
 
 @mcp.tool()

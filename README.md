@@ -26,6 +26,10 @@ This project does not download music from YouTube or any streaming service. User
 - Claude Code
 - Local MP3 files
 
+## Platform
+
+This project is currently tested on Windows.
+
 ## Setup
 
 Clone the repo:
@@ -88,6 +92,7 @@ Use the music-playlist-maker MCP server to list my moods.
 - `get_songs_by_mood`
 - `list_inbox_songs`
 - `import_inbox_song`
+- `delete_song_by_title`
 - `play_playlist_by_mood`
 - `shuffle_playlist_by_mood`
 - `pause_player`

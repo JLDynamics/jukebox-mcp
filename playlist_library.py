@@ -25,7 +25,7 @@ def get_player_status():
         return {
             "is_playing": False,
             "is_paused": music_is_paused,
-            "crrent_song": None,
+            "current_song": None,
             "playlist_size": 0,
         }
 
@@ -74,7 +74,7 @@ def import_song_from_inbox(file_name, mood):
     songs[mood].append(song_info)
     save_songs(songs)
 
-    return f"{file_name} is ready to import into {mood}."
+    return f"{file_name} imported into {mood}."
 
 
 def delete_song(mood, title):
@@ -96,7 +96,7 @@ def delete_song(mood, title):
 
             return f"{title} deleted from songs.json, but mp3 file was not found."
 
-        return "that song was not found in this mood"
+    return "that song was not found in this mood"
 
 
 def play_current_song():
