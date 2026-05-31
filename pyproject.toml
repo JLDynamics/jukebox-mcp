@@ -1,0 +1,11 @@
+[project]
+name = "music-playlist-maker"
+version = "0.1.0"
+description = "A beginner command-line music playlist maker."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp>=1.27.2",
+    "pygame>=2.6.1",
+]
+

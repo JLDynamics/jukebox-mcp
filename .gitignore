@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+inbox/
+library/
+songs.json
+
+*.mp3
+*.wav
+*.flac
+*.m4a
+*.aac
