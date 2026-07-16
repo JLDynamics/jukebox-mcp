@@ -3,9 +3,8 @@ __pycache__/
 *.pyc
 .ruff_cache/
 
-inbox/
 library/
-songs.json
+.DS_Store
 
 *.mp3
 *.wav

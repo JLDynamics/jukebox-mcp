@@ -1,42 +1,38 @@
-# Music Playlist Maker MCP Server
+# Jukebox MCP
 
-A local MP3 music library controlled from Claude Code through MCP.
+A local music player controlled from Claude Code through MCP.
 
-This project lets you organize your own MP3 files by mood, import songs from a local inbox folder, and control playback through MCP tools.
+Drop your audio files into the `library/` folder and control playback through MCP tools. The folder is the source of truth — no database or JSON file to maintain.
 
 ## Features
 
-- List available moods
-- List songs by mood
-- Import MP3 files from `inbox/`
-- Play mood playlists
-- Shuffle playlists
-- Pause, resume, stop, and skip songs
-- Check current player status
-- Delete songs from the local library
+- Auto-scans the `library/` folder for audio files (mp3, ogg, wav, flac, m4a, aac, opus)
+- Play or shuffle the library, or play a specific song by title
+- Pause, resume, stop, next, and previous
+- Repeat mode to loop the playlist
+- Player status with current song and position
+
+Playback is handled by VLC (via python-vlc), so any format VLC can play works — including m4a/AAC.
 
 ## What This Project Does Not Do
 
-This project does not download music from YouTube or any streaming service. Users provide their own legal MP3 files.
+This project does not download music from YouTube or any streaming service. Users provide their own legal audio files.
 
 ## Requirements
 
 - Python 3.13+
 - uv
 - Claude Code
-- Local MP3 files
-
-## Platform
-
-This project is currently tested on Windows.
+- [VLC media player](https://www.videolan.org/vlc/) installed on your system
+- Local audio files
 
 ## Setup
 
 Clone the repo:
 
 ```powershell
-git clone https://github.com/JLDynamics/music-playlist-maker.git
-cd music-playlist-maker
+git clone https://github.com/JLDynamics/jukebox-mcp.git
+cd jukebox-mcp
 ```
 
 Install dependencies:
@@ -45,29 +41,24 @@ Install dependencies:
 uv sync
 ```
 
-Create your personal songs file:
+Create the library folder (also created automatically on first run) and put your audio files in it:
 
 ```powershell
-copy songs.example.json songs.json
-```
-
-Create local music folders:
-
-```powershell
-mkdir inbox
 mkdir library
-mkdir library\happy
-mkdir library\sad
-mkdir library\focused
-mkdir library\angry
 ```
 
 ## Claude Code MCP Setup
 
-From the project folder:
+From the project folder (Windows):
 
 ```powershell
-claude mcp add music-playlist-maker -- .\.venv\Scripts\python.exe playlist_mcp_server.py
+claude mcp add jukebox-mcp -- .\.venv\Scripts\python.exe playlist_mcp_server.py
+```
+
+macOS/Linux:
+
+```bash
+claude mcp add jukebox-mcp -- ./.venv/bin/python playlist_mcp_server.py
 ```
 
 Restart Claude Code after adding the server.
@@ -75,42 +66,30 @@ Restart Claude Code after adding the server.
 Then ask Claude Code:
 
 ```text
-Use the music-playlist-maker MCP server to list my moods.
+Use the jukebox-mcp server to show my music library.
 ```
 
 ## Workflow
 
-1. Put MP3 files into `inbox/`.
-2. Ask Claude Code to list inbox songs.
-3. Ask Claude Code to import a song into a mood.
-4. Ask Claude Code to play or shuffle a mood playlist.
-5. Use pause, resume, next, stop, and status tools to control playback.
+1. Copy audio files into `library/`.
+2. Ask Claude Code to show your library.
+3. Ask Claude Code to play or shuffle the library, or a specific song.
+4. Use the player controls (pause, resume, next, previous, stop, repeat) and status tool.
 
 ## MCP Tools
 
-- `get_moods`
-- `get_songs_by_mood`
-- `list_inbox_songs`
-- `import_inbox_song`
-- `delete_song_by_title`
-- `play_playlist_by_mood`
-- `shuffle_playlist_by_mood`
-- `pause_player`
-- `resume_player`
-- `stop_player`
-- `play_next_song`
-- `get_status`
+- `get_library` — scan the library folder and list all songs
+- `control_player(action, title, shuffle)` — play, pause, resume, stop, next, previous, repeat_on, repeat_off
+- `get_status` — current song, position, and repeat state
 
 ## Local Files
 
 The following are intentionally ignored by Git:
 
-- `songs.json`
-- `inbox/`
 - `library/`
 - audio files such as `.mp3`, `.wav`, `.flac`, `.m4a`, and `.aac`
 
-This keeps personal music files and playlist data out of the public repository.
+This keeps personal music files out of the public repository.
 
 ## License
 

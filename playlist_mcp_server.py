@@ -1,86 +1,73 @@
 from mcp.server.fastmcp import FastMCP
 
 from playlist_library import (
-    delete_song,
+    get_library as library_contents,
     get_player_status,
-    import_song_from_inbox,
-    list_inbox_mp3_files,
-    list_moods,
-    list_songs,
     next_song,
     pause_music,
-    play_mood_playlist,
+    play_playlist,
+    play_song_by_title,
+    previous_song,
     resume_music,
-    shuffle_mood_playlist,
+    set_repeat,
     stop_music,
 )
 
-mcp = FastMCP("music-playlist-maker")
+mcp = FastMCP("jukebox-mcp")
 
 
 @mcp.tool()
-def list_inbox_songs():
-    return list_inbox_mp3_files()
+def get_library():
+    """List all songs by scanning the library folder."""
+    return library_contents()
 
 
 @mcp.tool()
-def import_inbox_song(file_name: str, mood: str):
-    return import_song_from_inbox(file_name, mood)
+def control_player(action: str, title: str = "", shuffle: bool = False):
+    """Control playback.
 
+    action: one of "play", "pause", "resume", "stop", "next",
+        "previous", "repeat_on", "repeat_off".
+    title: when playing, start at this specific song instead of the
+        beginning of the library.
+    shuffle: when playing, shuffle the playlist first.
+    """
+    if action == "play":
+        if title:
+            return play_song_by_title(title)
+        return play_playlist(shuffle)
 
-@mcp.tool()
-def delete_song_by_title(mood: str, title: str):
-    return delete_song(mood, title)
+    if action == "pause":
+        return pause_music()
 
+    if action == "resume":
+        return resume_music()
 
-@mcp.tool()
-def shuffle_playlist_by_mood(mood: str):
-    return shuffle_mood_playlist(mood)
+    if action == "stop":
+        return stop_music()
 
+    if action == "next":
+        return next_song()
 
-@mcp.tool()
-def pause_player():
-    return pause_music()
+    if action == "previous":
+        return previous_song()
 
+    if action == "repeat_on":
+        return set_repeat(True)
 
-@mcp.tool()
-def play_next_song():
-    return next_song()
+    if action == "repeat_off":
+        return set_repeat(False)
+
+    return (
+        "Unknown action. Use play, pause, resume, stop, next, "
+        "previous, repeat_on, or repeat_off."
+    )
 
 
 @mcp.tool()
 def get_status():
+    """Return the current player status."""
     return get_player_status()
-
-
-@mcp.tool()
-def play_playlist_by_mood(mood: str):
-    return play_mood_playlist(mood)
-
-
-@mcp.tool()
-def stop_player():
-    return stop_music()
-
-
-@mcp.tool()
-def resume_player():
-    return resume_music()
-
-
-@mcp.tool()
-def get_moods():
-    return list_moods()
-
-
-@mcp.tool()
-def get_songs_by_mood(mood: str):
-    songs = list_songs(mood)
-
-    if songs is None:
-        return "That mood does not exist."
-
-    return songs
 
 
 if __name__ == "__main__":
