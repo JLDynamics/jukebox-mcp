@@ -1,11 +1,11 @@
 [project]
-name = "music-playlist-maker"
+name = "jukebox-mcp"
 version = "0.1.0"
-description = "A beginner command-line music playlist maker."
+description = "A local MP3 player MCP server with folder-based categories."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "mcp>=1.27.2",
-    "pygame>=2.6.1",
+    "python-vlc>=3.0.0",
 ]
 
