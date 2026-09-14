@@ -91,6 +91,15 @@ The following are intentionally ignored by Git:
 
 This keeps personal music files out of the public repository.
 
+## Tests
+
+The automated tests use a fake VLC player, so they do not play audio or require
+an audio output device:
+
+```bash
+uv run python -m unittest discover -s tests -v
+```
+
 ## License
 
 MIT
